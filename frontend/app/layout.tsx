@@ -1,7 +1,11 @@
+import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import "@rainbow-me/rainbowkit/styles.css";
 import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
 import { cookies, headers } from "next/headers";
+import * as React from "react";
+import { WagmiConfig } from "wagmi";
 
 import Footer from "@/lib/components/Footer";
 import { NavBar } from "@/lib/components/NavBar";
@@ -9,6 +13,7 @@ import { ToastProvider } from "@/lib/components/ui/Toast";
 import { BrainProvider, FeatureFlagsProvider } from "@/lib/context";
 import { BrainConfigProvider } from "@/lib/context/BrainConfigProvider/brain-config-provider";
 import { SupabaseProvider } from "@/lib/context/SupabaseProvider";
+import { chains, config } from "@/lib/context/Web3Provider/wagmi";
 
 import "./globals.css";
 
@@ -40,17 +45,22 @@ const RootLayout = async ({
         className={`bg-white text-black min-h-screen flex flex-col dark:bg-black dark:text-white w-full ${inter.className}`}
       >
         <FeatureFlagsProvider>
-        <ToastProvider>
-          <SupabaseProvider session={session}>
-            <BrainConfigProvider>
-              <BrainProvider>
-                <NavBar />
-                <div className="flex-1">{children}</div>
-                <Footer />
-              </BrainProvider>
-            </BrainConfigProvider>
-          </SupabaseProvider>
-        </ToastProvider>
+          <ToastProvider>
+            <SupabaseProvider session={session}>
+              <BrainConfigProvider>
+                <BrainProvider>
+                  <WagmiConfig config={config}>
+                    <RainbowKitProvider chains={chains}>
+                      {" "}
+                      <NavBar />
+                      <div className="flex-1">{children}</div>
+                    </RainbowKitProvider>
+                  </WagmiConfig>
+                  <Footer />
+                </BrainProvider>
+              </BrainConfigProvider>
+            </SupabaseProvider>
+          </ToastProvider>
           <Analytics />
         </FeatureFlagsProvider>
       </body>
