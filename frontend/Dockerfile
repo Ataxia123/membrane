@@ -26,7 +26,7 @@ COPY . .
 RUN yarn build
 
 # Ensure port 3000 is accessible to our system
-EXPOSE 3000
+EXPOSE 4000
 
 # Run yarn start, as we would via the command line 
 CMD ["yarn", "start"]
