@@ -4,16 +4,13 @@ import { useEffect, useState } from "react";
 
 import { useBrainConfig } from "@/lib/context/BrainConfigProvider/hooks/useBrainConfig";
 import { useToast } from "@/lib/hooks";
-import { useEventTracking } from "@/services/analytics/useEventTracking";
 
 import { useChatService } from "./useChatService";
 import { useChatContext } from "../context/ChatContext";
 import { ChatQuestion } from "../types";
 
-
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useChat = () => {
-  const { track } = useEventTracking();
   const params = useParams();
   const [chatId, setChatId] = useState<string | undefined>(
     params?.chatId as string | undefined
@@ -28,7 +25,7 @@ export const useChat = () => {
   const {
     createChat,
     getChatHistory,
-    addQuestion: addQuestionToChat,
+    addAnalysis: addQuestionToChat,
   } = useChatService();
 
   useEffect(() => {
@@ -48,7 +45,7 @@ export const useChat = () => {
     return rep.data.chat_id;
   };
 
-  const addQuestion = async (question: string, callback?: () => void) => {
+  const addAnalysis = async (question: string, callback?: () => void) => {
     const chatQuestion: ChatQuestion = {
       model,
       question,
@@ -57,7 +54,6 @@ export const useChat = () => {
     };
 
     try {
-      void track("QUESTION_ASKED");
       setGeneratingAnswer(true);
       const currentChatId =
         chatId ??
@@ -89,5 +85,5 @@ export const useChat = () => {
     }
   };
 
-  return { history, addQuestion, generatingAnswer };
+  return { history, addAnalysis, generatingAnswer };
 };

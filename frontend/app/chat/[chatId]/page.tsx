@@ -3,7 +3,7 @@
 
 import PageHeading from "@/lib/components/ui/PageHeading";
 
-import { ChatInput, ChatMessages } from "../components";
+import { ChatInput, ChatMessages, IntakeForm } from "../components";
 import { ChatProvider } from "./context/ChatContext";
 
 export default function ChatPage() {
@@ -15,10 +15,17 @@ export default function ChatPage() {
           subtitle="Talk to a language model about your uploaded data"
         />
         <ChatProvider>
+<<<<<<< HEAD
           <div className="relative w-full flex flex-col flex-1 items-center">
             <div className="flex-1 w-full flex flex-col items-center">
+=======
+	<IntakeForm />
+          <div className="relative h-full w-full flex flex-col flex-1 items-center">
+            <div className="h-full flex-1 w-full flex flex-col items-center">
+>>>>>>> f517854 (latest)
               <ChatMessages />
             </div>
+            
             <ChatInput />
           </div>
         </ChatProvider>
