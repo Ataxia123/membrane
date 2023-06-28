@@ -20,9 +20,9 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Quivr - Get a Second Brain with Generative AI",
+  title: "inMembrane - Community Knowledge, on Demand",
   description:
-    "Quivr is your second brain in the cloud, designed to easily store and retrieve unstructured information.",
+    "inMembrane is a platform for communities to curate their knowlege base and share it with the world. It's a place to learn, share, and create",
 };
 
 const RootLayout = async ({

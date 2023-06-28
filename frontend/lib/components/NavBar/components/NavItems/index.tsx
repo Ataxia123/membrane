@@ -45,9 +45,6 @@ export const NavItems = ({
           <NavLink setOpen={setOpen} to="/explore">
             Explore
           </NavLink>
-          <NavLink setOpen={setOpen} to="/analyze">
-            Analyze
-          </NavLink>
         </>
       ) : (
         <>

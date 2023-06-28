@@ -1,10 +1,21 @@
 /* eslint-disable */
+"use client";
+import Button from "@/lib/components/ui/Button";
+
+import { useChat } from "@/app/chat/[chatId]/hooks/useChat";
 import { useState } from "react";
 
 export const IntakeForm = (): JSX.Element => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState<string>(""); // for optimistic updates
+  const { addQuestion, generatingAnswer } = useChat();
+
+  const submitQuestion = () => {
+    addQuestion(message, () => setMessage(""));
+  };
+
   async function handleSubmit() {
     console.log("harmless");
   }
@@ -20,7 +31,11 @@ export const IntakeForm = (): JSX.Element => {
 
         <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
           <form
-            onSubmit={handleSubmit}
+   	 onSubmit={(e) => {
+        e.preventDefault();
+        if (!generatingAnswer) {
+          submitQuestion(); }
+     	 }}
             className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center"
           >
             <label htmlFor="name">Project Name</label>
@@ -59,13 +74,18 @@ export const IntakeForm = (): JSX.Element => {
               onChange={(e) => setPhone(e.target.value)}
               className="p-2 m-2 border border-gray-300 rounded-md"
             />
-            <button
+            <Button
               type="submit"
               className="p-2 m-2 border border-gray-300 rounded-md"
             >
               Submit
-            </button>
+            </Button>
           </form>
+        </div>
+        <div>
+          {name}
+          {email}
+          {phone}
         </div>
       </main>
     </div>

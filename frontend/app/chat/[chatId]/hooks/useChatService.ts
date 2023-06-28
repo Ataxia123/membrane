@@ -32,9 +32,22 @@ export const useChatService = () => {
     ).data;
   };
 
+  const addAnalysis = async (
+    chatId: string,
+    chatQuestion: ChatQuestion
+  ): Promise<ChatHistory> => {
+    return (
+      await axiosInstance.post<ChatHistory>(
+        `/chat/${chatId}/question`,
+        chatQuestion
+      )
+    ).data;
+  };
+
   return {
     createChat,
     getChatHistory,
     addQuestion,
+    addAnalysis,
   };
 };
