@@ -1,6 +1,11 @@
 import { useAxios } from "@/lib/hooks";
 
-import { ChatEntity, ChatHistory, ChatQuestion, AnalysisQuestion } from "../types";
+import {
+  AnalysisQuestion,
+  ChatEntity,
+  ChatHistory,
+  ChatQuestion,
+} from "../types";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useChatService = () => {

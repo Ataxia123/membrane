@@ -9,10 +9,6 @@ import { useChatService } from "./useChatService";
 import { useChatContext } from "../context/ChatContext";
 import { ChatQuestion, AnalysisQuestion } from "../types";
 
-type Metadata = {
-  name: string;
-} 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useChat = () => {
   const params = useParams();
   const [chatId, setChatId] = useState<string | undefined>(
@@ -26,7 +22,7 @@ export const useChat = () => {
   const { publish } = useToast();
 
   const {
-    createChat, 
+    createChat,
     getChatHistory,
     addAnalysis: addQuestionToChat,
   } = useChatService();
