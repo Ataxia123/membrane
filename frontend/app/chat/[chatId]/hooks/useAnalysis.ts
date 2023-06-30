@@ -7,9 +7,10 @@ import { useToast } from "@/lib/hooks";
 
 import { useChatService } from "./useChatService";
 import { useChatContext } from "../context/ChatContext";
-import { ChatQuestion, AnalysisQuestion } from "../types";
+import { AnalysisQuestion } from "../types";
 
-export const useChat = () => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const useAnalysis = () => {
   const params = useParams();
   const [chatId, setChatId] = useState<string | undefined>(
     params?.chatId as string | undefined
@@ -24,7 +25,7 @@ export const useChat = () => {
   const {
     createChat,
     getChatHistory,
-    addAnalysis: addQuestionToChat,
+    addAnalysis: addAnalysisToChat,
   } = useChatService();
 
   useEffect(() => {
@@ -60,7 +61,7 @@ export const useChat = () => {
         (await generateNewChatIdFromName(
           question.split(" ").slice(0, 3).join(" ")
         ));
-      const answer = await addQuestionToChat(currentChatId, chatQuestion);
+      const answer = await addAnalysisToChat(currentChatId, chatQuestion);
       addToHistory(answer);
       callback?.();
     } catch (error) {

@@ -2,7 +2,7 @@
 "use client";
 import Button from "@/lib/components/ui/Button";
 
-import { useChat } from "@/app/chat/[chatId]/hooks/useAnalysis";
+import { useAnalysis } from "@/app/chat/[chatId]/hooks/useAnalysis";
 import { useState } from "react";
 import { ChatInput } from "../ChatMessages/ChatInput";
 import Card from "@/lib/components/ui/Card";
@@ -12,7 +12,7 @@ import Card from "@/lib/components/ui/Card";
 export const IntakeForm = (): JSX.Element => {
   const [name, setName] = useState("");
 
-  const { addAnalysis, generatingAnswer } = useChat();
+  const { addAnalysis, generatingAnswer } = useAnalysis();
 
   const submitQuestion = () => {
     addAnalysis(name, () => setName(""));
