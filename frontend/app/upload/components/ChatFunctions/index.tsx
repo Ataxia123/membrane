@@ -2,31 +2,18 @@
 "use client";
 import Button from "@/lib/components/ui/Button";
 
-import { useChat } from "@/app/chat/[chatId]/hooks/useAnalysis";
+import { useChat } from "@/app/chat/[chatId]/hooks/useChat";
 import { useState } from "react";
-
-type Metadata = {
-  name: string;
-  description: string;
-} 
-// esl
 
 export const IntakeForm = (): JSX.Element => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState<string>(""); // for optimistic updates
-  const { addAnalysis, generatingAnswer } =  useChat();
-
-  
+  const { addQuestion, generatingAnswer } = useChat();
 
   const submitQuestion = () => {
-    const questionData:Metadata = {
-      name: name,
-      description: email,
-    }
-    
-    addAnalysis(questionData, () => setMessage(""));
+    addQuestion(message, () => setMessage(""));
   };
 
   async function handleSubmit() {
@@ -37,6 +24,7 @@ export const IntakeForm = (): JSX.Element => {
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
         <h1 className="text-6xl font-bold">Intake Form</h1>
+
         <p className="mt-3 text-2xl">
           Please fill out the following form to the best of your ability.
         </p>

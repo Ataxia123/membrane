@@ -1,6 +1,6 @@
 import { useAxios } from "@/lib/hooks";
 
-import { ChatEntity, ChatHistory, ChatQuestion } from "../types";
+import { ChatEntity, ChatHistory, ChatQuestion, AnalysisQuestion } from "../types";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useChatService = () => {
@@ -34,11 +34,11 @@ export const useChatService = () => {
 
   const addAnalysis = async (
     chatId: string,
-    chatQuestion: ChatQuestion
+    chatQuestion: AnalysisQuestion
   ): Promise<ChatHistory> => {
     return (
       await axiosInstance.post<ChatHistory>(
-        `/chat/${chatId}/question`,
+        `/chat/${chatId}/analysis`,
         chatQuestion
       )
     ).data;

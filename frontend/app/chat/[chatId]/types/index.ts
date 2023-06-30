@@ -1,5 +1,14 @@
 import { UUID } from "crypto";
-
+type Metadata = {
+  name: string;
+  description: string;
+} 
+export type AnalysisQuestion = {
+  model: string;
+  question?: string;
+  temperature: number;
+  max_tokens: number;
+};
 export type ChatQuestion = {
   model: string;
   question?: string;

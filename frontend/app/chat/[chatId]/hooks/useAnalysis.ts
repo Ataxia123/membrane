@@ -7,8 +7,11 @@ import { useToast } from "@/lib/hooks";
 
 import { useChatService } from "./useChatService";
 import { useChatContext } from "../context/ChatContext";
-import { ChatQuestion } from "../types";
+import { ChatQuestion, AnalysisQuestion } from "../types";
 
+type Metadata = {
+  name: string;
+} 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useChat = () => {
   const params = useParams();
@@ -23,7 +26,7 @@ export const useChat = () => {
   const { publish } = useToast();
 
   const {
-    createChat,
+    createChat, 
     getChatHistory,
     addAnalysis: addQuestionToChat,
   } = useChatService();
@@ -46,7 +49,7 @@ export const useChat = () => {
   };
 
   const addAnalysis = async (question: string, callback?: () => void) => {
-    const chatQuestion: ChatQuestion = {
+    const chatQuestion: AnalysisQuestion = {
       model,
       question,
       temperature,

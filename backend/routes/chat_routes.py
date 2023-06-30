@@ -8,8 +8,11 @@ from llm.brainpicking import BrainPicking
 from llm.OpenAiFunctionBasedAnswerGenerator.OpenAiFunctionBasedAnswerGenerator import (
     OpenAiFunctionBasedAnswerGenerator,
 )
+from llm.OpenAiFunctionBasedAnswerGenerator.OpenAIAnalysis import (
+    OpenAIAnalysis,
+)   
 from models.chat import Chat, ChatHistory
-from models.chats import ChatQuestion
+from models.chats import ChatQuestion, AnalysisQuestion
 from models.settings import common_dependencies
 from models.users import User
 from repository.chat.create_chat import CreateChatProperties, create_chat
@@ -84,7 +87,7 @@ async def delete_chat(chat_id: UUID):
 
 # update existing chat metadata
 @chat_router.put(
-    "/chat/{chat_id}/metadata", dependencies=[Depends(AuthBearer())], tags=["Chat"]
+e   "/chat/{chat_id}/metadata", dependencies=[Depends(AuthBearer())], tags=["Chat"]
 )
 async def update_chat_metadata_handler(
     chat_data: ChatUpdatableProperties,
@@ -192,6 +195,52 @@ async def create_question_handler(
     except HTTPException as e:
         raise e
 
+@chat_router.post(
+    "/chat/{chat_id}/analysis", dependencies=[Depends(AuthBearer())], tags=["Chat"]
+)
+async def create_analysis_handler(
+    request: Request,
+    chat_question: AnalysisQuestion,
+    chat_id: UUID,
+    current_user: User = Depends(get_current_user),
+) -> ChatHistory:
+    try:
+        user_openai_api_key = request.headers.get("Openai-Api-Key")
+        check_user_limit(current_user.email, user_openai_api_key)
+        openai_function_compatible_models = [
+            "gpt-3.5-turbo-0613",
+            "gpt-4-0613",
+        ]
+        if chat_question.model in openai_function_compatible_models:
+            # TODO: RBAC with current_user
+            gpt_answer_generator = OpenAIAnalysis(
+                model=chat_question.model,
+                chat_id=chat_id,
+                temperature=chat_question.temperature,
+                max_tokens=chat_question.max_tokens,
+                # TODO: use user_id in vectors table instead of email
+                user_email=current_user.email,
+                user_openai_api_key=user_openai_api_key,
+            )
+            answer = gpt_answer_generator.get_answer(chat_question.question)
+        else:
+            brainPicking = BrainPicking(
+                chat_id=str(chat_id),
+                model=chat_question.model,
+                max_tokens=chat_question.max_tokens,
+                user_id=current_user.email,
+                user_openai_api_key=user_openai_api_key,
+            )
+            answer = brainPicking.generate_answer(chat_question.question)
+
+        chat_answer = update_chat_history(
+            chat_id=chat_id,
+            user_message=chat_question.question,
+            assistant_answer=answer,
+        )
+        return chat_answer
+    except HTTPException as e:
+        raise e
 
 # get chat history
 @chat_router.get(
