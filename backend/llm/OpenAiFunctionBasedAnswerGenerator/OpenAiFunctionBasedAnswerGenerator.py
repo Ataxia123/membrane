@@ -41,16 +41,14 @@ Write the answer in the same language as the question.
 If you don't know the answer, just say that you don't know. Don't try to make up an answer.
 Your main goal is to answer questions about user uploaded documents. Unless basic questions or greetings, you should always refer to user uploaded documents by fetching them with the {} function."""
 
-format(
-    get_context_function_name
-)
+format(get_context_function_name)
 
 get_history_schema = {
     "name": "get_history",
     "description": "Get current chat previous messages",
     "parameters": {
         "type": "object",
-        "properties": {b},
+        "properties": {},
     },
 }
 
@@ -146,7 +144,7 @@ class OpenAIAnalysis:
             )
             return messages
 
-        if useHistory:b
+        if useHistory:
             history = self._get_formatted_history()
             if len(history):
                 messages.append(
@@ -201,7 +199,7 @@ class OpenAIAnalysis:
         model_response = self._get_model_response(
             messages=self._get_formatted_prompt(question=question),
             functions=functions,
-       )
+        )
 
         return format_answer(model_response)
 
@@ -256,7 +254,8 @@ class OpenAIAnalysis:
             response = self._get_answer_from_question_and_context_and_history(question)
 
         return response.content or ""
-        
+
+
 class OpenAiFunctionBasedAnswerGenerator:
     # Default class attributes
     model: str = "gpt-3.5-turbo-0613"
@@ -339,7 +338,7 @@ class OpenAiFunctionBasedAnswerGenerator:
             )
             return messages
 
-        if useHistory:b
+        if useHistory:
             history = self._get_formatted_history()
             if len(history):
                 messages.append(
@@ -394,7 +393,7 @@ class OpenAiFunctionBasedAnswerGenerator:
         model_response = self._get_model_response(
             messages=self._get_formatted_prompt(question=question),
             functions=functions,
-       )
+        )
 
         return format_answer(model_response)
 

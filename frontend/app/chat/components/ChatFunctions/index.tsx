@@ -5,10 +5,6 @@ import Button from "@/lib/components/ui/Button";
 import { useChat } from "@/app/chat/[chatId]/hooks/useAnalysis";
 import { useState } from "react";
 
-type Metadata = {
-  name: string;
-  description: string;
-} 
 // esl
 
 export const IntakeForm = (): JSX.Element => {
@@ -16,17 +12,10 @@ export const IntakeForm = (): JSX.Element => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState<string>(""); // for optimistic updates
-  const { addAnalysis, generatingAnswer } =  useChat();
-
-  
+  const { addAnalysis, generatingAnswer } = useChat();
 
   const submitQuestion = () => {
-    const questionData:Metadata = {
-      name: name,
-      description: email,
-    }
-    
-    addAnalysis(questionData, () => setMessage(""));
+    addAnalysis(name, () => setMessage(""));
   };
 
   async function handleSubmit() {
@@ -43,11 +32,12 @@ export const IntakeForm = (): JSX.Element => {
 
         <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
           <form
-   	 onSubmit={(e) => {
-        e.preventDefault();
-        if (!generatingAnswer) {
-          submitQuestion(); }
-     	 }}
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!generatingAnswer) {
+                submitQuestion();
+              }
+            }}
             className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center"
           >
             <label htmlFor="name">Project Name</label>
@@ -58,39 +48,13 @@ export const IntakeForm = (): JSX.Element => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="p-2 m-2 border border-gray-300 rounded-md"
-            />
-            <label htmlFor="email">Project Description</label>
-            <input
-              id="email"
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="p-2 m-2 border border-gray-300 rounded-md"
-            />
-            <label htmlFor="phone">Project Landing Page</label>
-            <input
-              id="phone"
-              type="tel"
-              placeholder="Phone"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="p-2 m-2 border border-gray-300 rounded-md"
-            />
-            <label htmlFor="phone">Project Landing Page</label>
-            <input
-              id="phone"
-              type="tel"
-              placeholder="Phone"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="p-2 m-2 border border-gray-300 rounded-md"
+              style={{ color: "black" }}
             />
             <Button
               type="submit"
               className="p-2 m-2 border border-gray-300 rounded-md"
             >
-              Submit
+              Submit Name for Analysis
             </Button>
           </form>
         </div>

@@ -8,9 +8,9 @@ from llm.brainpicking import BrainPicking
 from llm.OpenAiFunctionBasedAnswerGenerator.OpenAiFunctionBasedAnswerGenerator import (
     OpenAiFunctionBasedAnswerGenerator,
 )
-from llm.OpenAiFunctionBasedAnswerGenerator.OpenAIAnalysis import (
+from llm.OpenAiFunctionBasedAnswerGenerator.OpenAiFunctionBasedAnswerGenerator import (
     OpenAIAnalysis,
-)   
+)
 from models.chat import Chat, ChatHistory
 from models.chats import ChatQuestion, AnalysisQuestion
 from models.settings import common_dependencies
@@ -87,7 +87,7 @@ async def delete_chat(chat_id: UUID):
 
 # update existing chat metadata
 @chat_router.put(
-e   "/chat/{chat_id}/metadata", dependencies=[Depends(AuthBearer())], tags=["Chat"]
+    "/chat/{chat_id}/metadata", dependencies=[Depends(AuthBearer())], tags=["Chat"]
 )
 async def update_chat_metadata_handler(
     chat_data: ChatUpdatableProperties,
@@ -195,6 +195,7 @@ async def create_question_handler(
     except HTTPException as e:
         raise e
 
+
 @chat_router.post(
     "/chat/{chat_id}/analysis", dependencies=[Depends(AuthBearer())], tags=["Chat"]
 )
@@ -241,6 +242,7 @@ async def create_analysis_handler(
         return chat_answer
     except HTTPException as e:
         raise e
+
 
 # get chat history
 @chat_router.get(
