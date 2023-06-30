@@ -24,3 +24,26 @@ services:
       - ~/.config/gcloud:/root/.config/gcloud
     ports:
       - 5050:5050
+  frontend2:
+    env_file:
+      - ./frontend/.env2
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    container_name: web
+    restart: always
+    ports:
+      - 4001:4000
+  backend2:
+    env_file:
+      - ./backend/.env2
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    container_name: backend
+    restart: always
+    volumes:
+      - ./backend/:/code/
+      - ~/.config/gcloud:/root/.config/gcloud
+    ports:
+      - 5051:5050
