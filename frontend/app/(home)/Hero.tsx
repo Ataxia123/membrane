@@ -40,11 +40,13 @@ const Hero = (): JSX.Element => {
         className="top-24 -z-0 flex flex-col gap-2 items-center justify-center pt-24"
       >
         <h1 className="text-5xl sm:text-7xl font-bold max-w-lg sm:max-w-xl">
-          Get a Second Brain with <span className="text-primary">Quivr</span>
+          Your community knowledge, alive in
+          <span className="text-primary">Membrane</span>
         </h1>
         <p className="text-base max-w-sm text-gray-500 mb-5 sm:mb-10">
-          Quivr is your second brain in the cloud, designed to easily store and
-          retrieve unstructured information.
+          Membrane is a platform for communities to create, curate and share
+          knowledge. Teach your Membrane AI what makes your community unique and
+          let it help you onboard new members, answer questions and more.
         </p>
         <Link href={"/signup"}>
           <Button>Get Started</Button>

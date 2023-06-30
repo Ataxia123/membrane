@@ -48,10 +48,10 @@ export const NavItems = ({
         </>
       ) : (
         <>
-          <NavLink setOpen={setOpen} to="https://github.com/StanGirard/quivr">
+          <NavLink setOpen={setOpen} to="https://github.com/Ataxia123/membrane">
             Github
           </NavLink>
-          <NavLink setOpen={setOpen} to="https://discord.gg/HUpRgp2HG8">
+          <NavLink setOpen={setOpen} to="https://t.me/NerdQuarters">
             Discord
           </NavLink>
         </>
