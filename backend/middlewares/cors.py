@@ -2,12 +2,10 @@ from fastapi.middleware.cors import CORSMiddleware
 
 origins = [
     "http://localhost",
-    "http://localhost:3000",
-    "https://quivr.app",
-    "https://www.quivr.app",
-    "http://quivr.app",
-    "http://www.quivr.app",
-    "*"
+    "http://localhost:4000",
+    "https://ai.nerd.finance",
+    "http://ai.nerd.finance",
+    "*",
 ]
 
 
